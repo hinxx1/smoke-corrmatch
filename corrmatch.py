@@ -88,7 +88,7 @@ def main():
 
     model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank],
                                                       output_device=local_rank, find_unused_parameters=False)
-
+    #选择有标签损失函数
     if cfg['criterion']['name'] == 'CELoss':
         criterion_l = nn.CrossEntropyLoss(**cfg['criterion']['kwargs']).cuda(local_rank)
     elif cfg['criterion']['name'] == 'OHEM':
@@ -96,8 +96,8 @@ def main():
     else:
         raise NotImplementedError('%s criterion is not implemented' % cfg['criterion']['name'])
 
-    criterion_u = nn.CrossEntropyLoss(reduction='none').cuda(local_rank)
-    criterion_kl = nn.KLDivLoss(reduction='none').cuda(local_rank)
+    criterion_u = nn.CrossEntropyLoss(reduction='none').cuda(local_rank)#无标签损失函数
+    criterion_kl = nn.KLDivLoss(reduction='none').cuda(local_rank)#约束弱增强 / 强增强结果一致
 
     trainset_u = SemiDataset(cfg['dataset'], cfg['data_root'], 'train_u',
                              cfg['crop_size'], args.unlabeled_id_path)
@@ -148,7 +148,7 @@ def main():
             img_u_w_mix = img_u_w_mix.cuda()
             img_u_s1_mix = img_u_s1_mix.cuda()
             ignore_mask_mix = ignore_mask_mix.cuda()
-            b, c, h, w = img_x.shape
+            b, c, h, w = img_x.shape#b:batch size, c:channels, h:height, w:width
 
             with torch.no_grad():
                 model.eval()
@@ -162,13 +162,13 @@ def main():
             model.train()
 
             num_lb, num_ulb = img_x.shape[0], img_u_w.shape[0]
-
+            #扰动和相关性增强
             res_w = model(torch.cat((img_x, img_u_w)), need_fp=True, use_corr=True)
 
-            preds = res_w['out']
-            preds_fp = res_w['out_fp']
-            preds_corr = res_w['corr_out']
-            preds_corr_map = res_w['corr_map'].detach()
+            preds = res_w['out']#普通预测
+            preds_fp = res_w['out_fp']#扰动预测
+            preds_corr = res_w['corr_out']#相关性增强预测
+            preds_corr_map = res_w['corr_map'].detach()#相关性掩码
             pred_x_corr, pred_u_w_corr = preds_corr.split([num_lb, num_ulb])
             pred_u_w_corr_map = preds_corr_map[num_lb:]
             pred_x, pred_u_w = preds.split([num_lb, num_ulb])
@@ -203,10 +203,10 @@ def main():
             conf_fliter_u_w = ((conf_u_w_cutmixed1 >= thresh_global) & (ignore_mask_cutmixed1 != 255))
             conf_fliter_u_w_without_cutmix = conf_fliter_u_w.clone()
             conf_fliter_u_w_sample = rearrange(conf_fliter_u_w_without_cutmix, 'n h w -> n 1 h w')
-
+            #segments 为形状 (B,128,H,W) 的掩码，每个通道对应 一个锚点像素的高相关区域
             segments = (corr_map_u_w_cutmixed1 * conf_fliter_u_w_sample).bool()
 
-            for img_idx in range(b_sample):
+            for img_idx in range(b_sample):#若一个 segment 内“高置信度像素”比例足够高，就把最常见类别 top_class 传播到 segment 全体像素。
                 for segment_idx in range(c_sample):
 
                     segment = segments[img_idx, segment_idx]

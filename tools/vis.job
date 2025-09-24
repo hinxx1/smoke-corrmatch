@@ -1,0 +1,42 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_h100
+#SBATCH --gpus=1
+#SBATCH --job-name=vis_corrmatch
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=9
+#SBATCH --time=04:00:00
+#SBATCH --output=slurm_output_vis_%A.out
+
+module purge
+module load 2023
+module load Anaconda3/2023.07-2
+
+# Your job starts in the directory where you call sbatch
+cd $HOME/smoke-corrmatch
+
+# Activate your environment
+source activate corrmatch
+
+#config=configs/pascal.yaml
+#labeled_id_path=partitions/pascal/92/labeled.txt
+#unlabeled_id_path=partitions/pascal/92/unlabeled.txt
+#save_path=exp/pascal/92/unimatch
+config=configs/smoke.yaml
+labeled_id_path=partitions/smoke/1_4/labeled.txt
+unlabeled_id_path=partitions/smoke/1_4/unlabeled.txt
+save_path=exp/smoke/1_4/unimatch
+
+# Create save directory
+mkdir -p $save_path
+
+# Run your code
+srun python -m torch.distributed.launch \
+    --nproc_per_node=1 \
+    --master_addr=localhost \
+    --master_port=29504 \
+    vis.py \
+    --config=$config \
+    --labeled-id-path $labeled_id_path \
+    --unlabeled-id-path $unlabeled_id_path \
+    --save-path $save_path 

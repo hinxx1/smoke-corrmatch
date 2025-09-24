@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_h100
+#SBATCH --gpus=2
+#SBATCH --job-name=val_corrmatch
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=9
+#SBATCH --time=06:00:00
+#SBATCH --output=slurm_output_%A.out
+
+module purge
+module load 2023
+module load Anaconda3/2023.07-2
+
+# Your job starts in the directory where you call sbatch
+cd $HOME/smoke-corrmatch
+
+# Activate your environment
+source activate corrmatch
+
+config=configs/smoke.yaml
+checkpoint_path=your/checkpoint/path
+
+mkdir -p $save_path
+
+python -m torch.distributed.launch \
+    --nproc_per_node=2 \
+    --master_addr=localhost \
+    --master_port=29502 \
+    evaluate.py \
+    --config=$config --checkpoint_path $checkpoint_path

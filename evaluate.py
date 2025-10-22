@@ -25,7 +25,7 @@ def evaluate(model, loader, mode, cfg):
             b, _, h, w = img.shape
             if mode == 'sliding_window':
                 grid = cfg['crop_size']
-                final = torch.zeros(b, 19, h, w).cuda()
+                final = torch.zeros(b, cfg['nclass'], h, w).cuda()
                 row = 0
                 while row < h:
                     col = 0

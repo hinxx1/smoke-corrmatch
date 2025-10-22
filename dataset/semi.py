@@ -23,7 +23,7 @@ class SemiDataset(Dataset):
             with open(id_path, 'r') as f:
                 self.ids = f.read().splitlines()
             if mode == 'train_l' and nsample is not None:
-                self.ids *= math.ceil(nsample / len(self.ids))
+                self.ids = self.ids * math.ceil(nsample / len(self.ids))
                 random.shuffle(self.ids)
                 self.ids = self.ids[:nsample]
         else:
@@ -37,7 +37,7 @@ class SemiDataset(Dataset):
             mask = Image.fromarray(np.zeros((img.size[1], img.size[0]), dtype=np.uint8)) # 无标签时，mask 为全 0
         else:
             mask = Image.fromarray(np.array(Image.open(os.path.join(self.root, id.split(' ')[1])))) # 有标签时，mask 为标签图
-            
+
         if self.mode == 'val':
             img_ori = np.array(img)
             img, mask = normalize(img, mask)

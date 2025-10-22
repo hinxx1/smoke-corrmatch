@@ -123,7 +123,7 @@ def main():
 
     total_iters = len(trainloader_u) * cfg['epochs']
     previous_best = 0.0
-    thresh_controller = ThreshController(nclass=21, momentum=0.999, thresh_init=cfg['thresh_init'])
+    thresh_controller = ThreshController(nclass=cfg['nclass'], momentum=0.999, thresh_init=cfg['thresh_init'])
 
     for epoch in range(cfg['epochs']):
         if rank == 0:

@@ -29,13 +29,13 @@ class ThreshController:
         for cls in unique_cls:
             cls_map = (mask_pred == cls)
             if ignore_mask is not None:
-                cls_map *= (ignore_mask != 255)
+                cls_map = cls_map * (ignore_mask != 255)
             if cls_map.sum() == 0:
-                cls_num -= 1
+                cls_num = cls_num - 1
                 continue
             pred_conf_cls_all = pred_conf[cls_map]
             cls_max_conf = pred_conf_cls_all.max()
-            new_global += cls_max_conf
+            new_global = new_global + cls_max_conf
         if cls_num > 0:
             return_dict['new_global'] = new_global / cls_num
         else:

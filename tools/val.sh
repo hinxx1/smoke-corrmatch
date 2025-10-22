@@ -1,7 +1,7 @@
 #!/bin/bash
 now=$(date +"%Y%m%d_%H%M%S")
 
-config=configs/pascal.yaml
+config=configs/smoke.yaml
 checkpoint_path=your/checkpoint/path
 
 python -m torch.distributed.launch \

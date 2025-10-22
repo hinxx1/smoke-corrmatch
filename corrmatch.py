@@ -36,7 +36,8 @@ parser.add_argument('--config', type=str, required=True)
 parser.add_argument('--labeled-id-path', type=str, required=True)
 parser.add_argument('--unlabeled-id-path', type=str, required=True)
 parser.add_argument('--save-path', type=str, required=True)
-parser.add_argument('--local_rank', default=0, type=int)
+parser.add_argument('--local_rank', '--local-rank', dest='local_rank', type=int,
+                    default=int(os.environ.get('LOCAL_RANK', 0)))
 parser.add_argument('--port', default=None, type=int)
 
 
@@ -258,14 +259,14 @@ def main():
             loss.backward()
             optimizer.step()
 
-            total_loss += loss.item()
-            total_loss_x += loss_x.item()
-            total_loss_s += loss_u_s1.item()
-            total_loss_kl += loss_u_kl.item()
-            total_loss_w_fp += loss_u_w_fp.item()
-            total_loss_corr_ce += loss_x_corr.item()
-            total_loss_corr_u += loss_u_corr.item()
-            total_mask_ratio += ((conf_u_w >= thresh_global) & (ignore_mask != 255)).sum().item() / \
+            total_loss = total_loss     + loss.item()
+            total_loss_x = total_loss_x + loss_x.item()
+            total_loss_s = total_loss_s + loss_u_s1.item()
+            total_loss_kl = total_loss_kl + loss_u_kl.item()
+            total_loss_w_fp = total_loss_w_fp + loss_u_w_fp.item()
+            total_loss_corr_ce = total_loss_corr_ce + loss_x_corr.item()
+            total_loss_corr_u = total_loss_corr_u + loss_u_corr.item()
+            total_mask_ratio = total_mask_ratio + ((conf_u_w >= thresh_global) & (ignore_mask != 255)).sum().item() / \
                                 (ignore_mask != 255).sum().item()
 
             iters = epoch * len(trainloader_u) + i

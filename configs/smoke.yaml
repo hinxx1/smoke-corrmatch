@@ -6,7 +6,7 @@ crop_size: 896
 
 # arguments for training
 epochs: 80
-batch_size: 4
+batch_size: 2
 lr: 0.001  # 4GPUs
 lr_multi: 10.0
 criterion:

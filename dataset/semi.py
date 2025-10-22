@@ -33,8 +33,11 @@ class SemiDataset(Dataset):
     def __getitem__(self, item):
         id = self.ids[item]
         img = Image.open(os.path.join(self.root, id.split(' ')[0])).convert('RGB')
-        mask = Image.fromarray(np.array(Image.open(os.path.join(self.root, id.split(' ')[1]))))
-
+        if self.mode == 'train_u':
+            mask = Image.fromarray(np.zeros((img.size[1], img.size[0]), dtype=np.uint8)) # 无标签时，mask 为全 0
+        else:
+            mask = Image.fromarray(np.array(Image.open(os.path.join(self.root, id.split(' ')[1])))) # 有标签时，mask 为标签图
+            
         if self.mode == 'val':
             img_ori = np.array(img)
             img, mask = normalize(img, mask)

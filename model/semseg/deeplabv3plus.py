@@ -45,7 +45,7 @@ class DeepLabV3Plus(nn.Module):
             self.proj = nn.Sequential(
                 nn.Conv2d(2048, 256, kernel_size=3, stride=1, padding=1, bias=True),
                 nn.BatchNorm2d(256),
-                nn.ReLU(inplace=True),
+                nn.ReLU(inplace=False),
                 nn.Dropout2d(0.1),
             )
 

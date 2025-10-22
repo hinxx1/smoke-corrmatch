@@ -80,7 +80,7 @@ class Block(nn.Module):
         self.hook_layer = x
         x = self.sepconv3(x)
 
-        x += skip
+        x = x + skip
         return x
 
 

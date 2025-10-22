@@ -33,8 +33,8 @@ def evaluate(model, loader, mode, cfg):
                         res = model(img[:, :, row: min(h, row + grid), col: min(w, col + grid)])
                         pred = res['out']
                         final[:, :, row: min(h, row + grid), col: min(w, col + grid)] += pred.softmax(dim=1)
-                        col += int(grid * 2 / 3)
-                    row += int(grid * 2 / 3)
+                        col = col + int(grid * 2 / 3)
+                    row = row + int(grid * 2 / 3)
 
                 pred = final.argmax(dim=1)
 

@@ -1,14 +1,14 @@
 #!/bin/bash
 now=$(date +"%Y%m%d_%H%M%S")
 
-config=configs/pascal.yaml
-labeled_id_path=partitions/pascal/92/labeled.txt
-unlabeled_id_path=partitions/pascal/92/unlabeled.txt
-save_path=exp/pascal/92/unimatch
-#config=configs/cityscapes.yaml
-#labeled_id_path=partitions/cityscapes/1_4/labeled.txt
-#unlabeled_id_path=partitions/cityscapes/1_4/unlabeled.txt
-#save_path=exp/cityscapes/1_4/unimatch
+#config=configs/pascal.yaml
+#labeled_id_path=partitions/pascal/92/labeled.txt
+#unlabeled_id_path=partitions/pascal/92/unlabeled.txt
+#save_path=exp/pascal/92/unimatch
+config=configs/smoke.yaml
+labeled_id_path=partitions/smoke/1_16/labeled.txt
+unlabeled_id_path=partitions/smoke/1_16/unlabeled.txt
+save_path=exp/smoke/1_16/unimatch
 
 mkdir -p $save_path
 

@@ -11,16 +11,16 @@ __all__ = ['xception']
 
 class SeparableConv2d(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size=1, stride=1, padding=0, dilation=1, bias=False,
-                 activate_first=True, inplace=True):
+                 activate_first=True, inplace=False):
         super(SeparableConv2d, self).__init__()
         self.relu0 = nn.ReLU(inplace=inplace)
         self.depthwise = nn.Conv2d(in_channels, in_channels, kernel_size, stride, padding, dilation, groups=in_channels,
                                    bias=bias)
         self.bn1 = nn.BatchNorm2d(in_channels, momentum=bn_mom)
-        self.relu1 = nn.ReLU(inplace=True)
+        self.relu1 = nn.ReLU(inplace=False)
         self.pointwise = nn.Conv2d(in_channels, out_channels, 1, 1, 0, 1, 1, bias=bias)
         self.bn2 = nn.BatchNorm2d(out_channels, momentum=bn_mom)
-        self.relu2 = nn.ReLU(inplace=True)
+        self.relu2 = nn.ReLU(inplace=False)
         self.activate_first = activate_first
 
     def forward(self, x):
@@ -39,7 +39,7 @@ class SeparableConv2d(nn.Module):
 
 class Block(nn.Module):
     def __init__(self, in_filters, out_filters, strides=1, atrous=None, grow_first=True, activate_first=True,
-                 inplace=True):
+                 inplace=False):
         super(Block, self).__init__()
         if atrous == None:
             atrous = [1] * 3
@@ -105,7 +105,7 @@ class Xception(nn.Module):
             raise ValueError('xception.py: output stride=%d is not supported.' % os)
         self.conv1 = nn.Conv2d(3, 32, 3, 2, 1, bias=False)
         self.bn1 = nn.BatchNorm2d(32, momentum=bn_mom)
-        self.relu = nn.ReLU(inplace=True)
+        self.relu = nn.ReLU(inplace=False)
 
         self.conv2 = nn.Conv2d(32, 64, 3, 1, 1, bias=False)
         self.bn2 = nn.BatchNorm2d(64, momentum=bn_mom)

@@ -62,7 +62,8 @@ class DeepLabV3Plus(nn.Module):
             outs = F.interpolate(outs, size=(h, w), mode="bilinear", align_corners=True)
             out, out_fp = outs.chunk(2)#若 need_fp 为真，outs 的通道数翻倍，chunk(2) 把它切成普通输出 out 和扰动输出 out_fp
             if use_corr:
-                proj_feats = self.proj(c4)
+                c4_for_proj = c4.clone()
+                proj_feats = self.proj(c4_for_proj)
                 corr_out_dict = self.corr(proj_feats, out)
                 dict_return['corr_map'] = corr_out_dict['corr_map']#corr_map：二值相关性掩码
                 corr_out = corr_out_dict['out']#相关性增强后的预测

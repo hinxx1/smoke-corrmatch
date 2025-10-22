@@ -1,0 +1,196 @@
+============================================================================================== 
+Warning! Mixing Conda and module environments may lead to corruption of the
+user environment. 
+We do not recommend users mixing those two environments unless absolutely
+necessary. Note that 
+SURF does not provide any support for Conda environment.
+For more information, please refer to our software policy page:
+https://servicedesk.surf.nl/wiki/display/WIKI/Software+policy+Snellius#SoftwarepolicySnellius-UseofAnacondaandMinicondaenvironmentsonSnellius 
+
+Remember that many packages have already been installed on the system and can
+be loaded using 
+the 'module load <package__name>' command. If you are uncertain if a package is
+already available 
+on the system, please use 'module avail' or 'module spider' to search for it.
+============================================================================================== 
+/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/distributed/launch.py:181: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use-env is set by default in torchrun.
+If your script expects `--local-rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+[2025-10-22 07:56:26,761][    INFO] {'backbone': 'resnet101',
+ 'batch_size': 2,
+ 'criterion': {'kwargs': {'ignore_index': 255}, 'name': 'CELoss'},
+ 'crop_size': 321,
+ 'data_root': './SmokeDetection',
+ 'dataset': 'smoke',
+ 'dilations': [12, 24, 36],
+ 'epochs': 80,
+ 'lr': 0.001,
+ 'lr_multi': 10.0,
+ 'multi_grid': False,
+ 'nclass': 2,
+ 'pretrain': True,
+ 'replace_stride_with_dilation': [False, True, True],
+ 'thresh_init': 0.85}
+
+[2025-10-22 07:56:26,762][    INFO] {'backbone': 'resnet101',
+ 'batch_size': 2,
+ 'criterion': {'kwargs': {'ignore_index': 255}, 'name': 'CELoss'},
+ 'crop_size': 321,
+ 'data_root': './SmokeDetection',
+ 'dataset': 'smoke',
+ 'dilations': [12, 24, 36],
+ 'epochs': 80,
+ 'lr': 0.001,
+ 'lr_multi': 10.0,
+ 'multi_grid': False,
+ 'nclass': 2,
+ 'pretrain': True,
+ 'replace_stride_with_dilation': [False, True, True],
+ 'thresh_init': 0.85}
+
+[2025-10-22 07:56:27,573][    INFO] Total params: 64.2M
+
+[2025-10-22 07:56:27,934][    INFO] Total params: 64.2M
+
+[2025-10-22 07:56:28,293][    INFO] ===========> Epoch: 0, LR: 0.0010, Previous best: 0.00
+  0%|          | 0/735 [00:00<?, ?it/s][2025-10-22 07:56:29,687][    INFO] ===========> Epoch: 0, LR: 0.0010, Previous best: 0.00
+  0%|          | 0/735 [00:00<?, ?it/s]/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/autograd/__init__.py:251: UserWarning: Error detected in CudnnBatchNormBackward0. Traceback of forward call that caused the error:
+  File "/gpfs/home3/yzou/smoke-corrmatch/corrmatch.py", line 314, in <module>
+    main()
+  File "/gpfs/home3/yzou/smoke-corrmatch/corrmatch.py", line 170, in main
+    res_w = model(torch.cat((img_x, img_u_w)), need_fp=True, use_corr=True)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/parallel/distributed.py", line 1519, in forward
+    else self._run_ddp_forward(*inputs, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/parallel/distributed.py", line 1355, in _run_ddp_forward
+    return self.module(*inputs, **kwargs)  # type: ignore[index]
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/yzou/smoke-corrmatch/model/semseg/deeplabv3plus.py", line 65, in forward
+    proj_feats = self.proj(c4)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/container.py", line 215, in forward
+    input = module(input)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/batchnorm.py", line 751, in forward
+    return F.batch_norm(
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/functional.py", line 2478, in batch_norm
+    return torch.batch_norm(
+ (Triggered internally at ../torch/csrc/autograd/python_anomaly_mode.cpp:114.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Traceback (most recent call last):
+  File "/gpfs/home3/yzou/smoke-corrmatch/corrmatch.py", line 314, in <module>
+    main()
+  File "/gpfs/home3/yzou/smoke-corrmatch/corrmatch.py", line 262, in main
+    loss.backward()
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/_tensor.py", line 492, in backward
+    torch.autograd.backward(
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/autograd/__init__.py", line 251, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: one of the variables needed for gradient computation has been modified by an inplace operation: [torch.cuda.FloatTensor [256]] is at version 3; expected version 2 instead. Hint: the backtrace further above shows the operation that failed to compute its gradient. The variable in question was changed in there or anywhere later. Good luck!
+  0%|          | 0/735 [00:03<?, ?it/s]
+/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/autograd/__init__.py:251: UserWarning: Error detected in CudnnBatchNormBackward0. Traceback of forward call that caused the error:
+  File "/gpfs/home3/yzou/smoke-corrmatch/corrmatch.py", line 314, in <module>
+    main()
+  File "/gpfs/home3/yzou/smoke-corrmatch/corrmatch.py", line 170, in main
+    res_w = model(torch.cat((img_x, img_u_w)), need_fp=True, use_corr=True)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/parallel/distributed.py", line 1519, in forward
+    else self._run_ddp_forward(*inputs, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/parallel/distributed.py", line 1355, in _run_ddp_forward
+    return self.module(*inputs, **kwargs)  # type: ignore[index]
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/yzou/smoke-corrmatch/model/semseg/deeplabv3plus.py", line 65, in forward
+    proj_feats = self.proj(c4)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/container.py", line 215, in forward
+    input = module(input)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/modules/batchnorm.py", line 751, in forward
+    return F.batch_norm(
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/nn/functional.py", line 2478, in batch_norm
+    return torch.batch_norm(
+ (Triggered internally at ../torch/csrc/autograd/python_anomaly_mode.cpp:114.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Traceback (most recent call last):
+  File "/gpfs/home3/yzou/smoke-corrmatch/corrmatch.py", line 314, in <module>
+    main()
+  File "/gpfs/home3/yzou/smoke-corrmatch/corrmatch.py", line 262, in main
+    loss.backward()
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/_tensor.py", line 492, in backward
+    torch.autograd.backward(
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/autograd/__init__.py", line 251, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: one of the variables needed for gradient computation has been modified by an inplace operation: [torch.cuda.FloatTensor [256]] is at version 3; expected version 2 instead. Hint: the backtrace further above shows the operation that failed to compute its gradient. The variable in question was changed in there or anywhere later. Good luck!
+  0%|          | 0/735 [00:03<?, ?it/s]
+[2025-10-22 07:56:37,822] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 0 (pid: 2187653) of binary: /home/yzou/.conda/envs/corrmatch/bin/python
+Traceback (most recent call last):
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/distributed/launch.py", line 196, in <module>
+    main()
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/distributed/launch.py", line 192, in main
+    launch(args)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/distributed/launch.py", line 177, in launch
+    run(args)
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/distributed/run.py", line 797, in run
+    elastic_launch(
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/yzou/.conda/envs/corrmatch/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+corrmatch.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-10-22_07:56:37
+  host      : gcn97.local.snellius.surf.nl
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 2187654)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-10-22_07:56:37
+  host      : gcn97.local.snellius.surf.nl
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2187653)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: gcn97: task 0: Exited with exit code 1
+srun: Terminating StepId=15496368.0

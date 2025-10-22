@@ -22,7 +22,8 @@ parser.add_argument('--config', type=str, required=True)
 parser.add_argument('--labeled-id-path', type=str, required=True)
 parser.add_argument('--unlabeled-id-path', type=str, required=True)
 parser.add_argument('--save-path', type=str, required=True)
-parser.add_argument('--local_rank', default=0, type=int)
+parser.add_argument('--local_rank', '--local-rank', dest='local_rank', type=int,
+                    default=int(os.environ.get('LOCAL_RANK', 0)))
 parser.add_argument('--port', default=None, type=int)
 args = parser.parse_args()
 
@@ -59,7 +60,7 @@ rank, word_size = setup_distributed(port=args.port)
 cfg = yaml.load(open('configs/pascal.yaml', "r"), Loader=yaml.Loader)
 
 model = DeepLabV3Plus(cfg)
-model.load_state_dict(torch.load('Your/checkpoint/path'))
+model.load_state_dict(torch.load('exp/smoke/1_4/corrmatch/resnet101_64.514.pth'))
 model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
 model.cuda()
 

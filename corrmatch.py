@@ -56,6 +56,9 @@ def init_seeds(seed=0, cuda_deterministic=False):
 
 
 def main():
+    import torch
+    torch.autograd.set_detect_anomaly(True)
+
     args = parser.parse_args()
 
     cfg = yaml.load(open(args.config, "r"), Loader=yaml.Loader)
@@ -88,7 +91,9 @@ def main():
     model.cuda()
 
     model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank],
-                                                      output_device=local_rank, find_unused_parameters=False)
+                                                      output_device=local_rank,
+                                                      broadcast_buffers=False,
+                                                      find_unused_parameters=False)
     #选择有标签损失函数
     if cfg['criterion']['name'] == 'CELoss':
         criterion_l = nn.CrossEntropyLoss(**cfg['criterion']['kwargs']).cuda(local_rank)

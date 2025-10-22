@@ -80,7 +80,9 @@ model.cuda()
 
 local_rank = int(os.environ["LOCAL_RANK"])
 model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank],
-                                                  output_device=local_rank, find_unused_parameters=False)
+                                                  output_device=local_rank,
+                                                  broadcast_buffers=False,
+                                                  find_unused_parameters=False)
 
 valset = SemiDataset(cfg['dataset'], cfg['data_root'], 'val')
 valsampler = torch.utils.data.distributed.DistributedSampler(valset, shuffle=False)

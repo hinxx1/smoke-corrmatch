@@ -2,7 +2,7 @@
 dataset: smoke
 data_root: ./SmokeDetection
 nclass: 2 
-crop_size: 896
+crop_size: 321
 
 # arguments for training
 epochs: 80

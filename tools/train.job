@@ -16,7 +16,7 @@ module load Anaconda3/2023.07-2
 cd $HOME/smoke-corrmatch
 
 # Activate your environment
-source activate corrmatch
+source activate smoke-corrmatch
 
 config=configs/smoke.yaml
 labeled_id_path=partitions/smoke/1_4/labeled.txt

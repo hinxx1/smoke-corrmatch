@@ -50,7 +50,7 @@ def color_map(dataset='pascal'):
     elif dataset == 'smoke':
     # smoke segmentation: 0 = background, 1 = smoke
         cmap[0] = np.array([0, 0, 0])         # 背景 - 黑色
-        cmap[1] = np.array([255, 255, 255])   # 烟雾 - 白色
+        cmap[1] = np.array([255, 128, 0])   # 烟雾 - 白色
 
     return cmap
 

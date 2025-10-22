@@ -18,14 +18,10 @@ cd $HOME/smoke-corrmatch
 # Activate your environment
 source activate corrmatch
 
-#config=configs/pascal.yaml
-#labeled_id_path=partitions/pascal/92/labeled.txt
-#unlabeled_id_path=partitions/pascal/92/unlabeled.txt
-#save_path=exp/pascal/92/unimatch
 config=configs/smoke.yaml
 labeled_id_path=partitions/smoke/1_4/labeled.txt
 unlabeled_id_path=partitions/smoke/1_4/unlabeled.txt
-save_path=exp/smoke/1_4/unimatch
+save_path=exp/smoke/1_4/corrmatch
 
 # Create save directory
 mkdir -p $save_path

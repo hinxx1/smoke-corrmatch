@@ -29,7 +29,7 @@ from util.thresh_helper import ThreshController
 from einops import rearrange
 import random
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 
 parser = argparse.ArgumentParser(description='Semi-Supervised Semantic Segmentation')
 parser.add_argument('--config', type=str, required=True)

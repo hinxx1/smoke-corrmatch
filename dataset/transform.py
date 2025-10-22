@@ -15,8 +15,24 @@ def crop(img, mask, size, ignore_value=255):
     mask = ImageOps.expand(mask, border=(0, 0, padw, padh), fill=ignore_value)
 
     w, h = img.size
-    x = random.randint(0, w - size)
-    y = random.randint(0, h - size)
+    
+    # 100% 以前景为中心裁剪（针对小目标优化）
+    mask_np = np.array(mask)
+    fg_indices = np.where((mask_np > 0) & (mask_np != ignore_value))
+    
+    if len(fg_indices[0]) > 0:
+        # 随机选择一个前景像素作为中心
+        idx = random.randint(0, len(fg_indices[0]) - 1)
+        center_y, center_x = fg_indices[0][idx], fg_indices[1][idx]
+        
+        # 以该像素为中心，随机偏移生成裁剪框
+        x = max(0, min(w - size, center_x - random.randint(size // 4, size * 3 // 4)))
+        y = max(0, min(h - size, center_y - random.randint(size // 4, size * 3 // 4)))
+    else:
+        # 如果没有前景（理论上不应该发生），则随机裁剪
+        x = random.randint(0, w - size)
+        y = random.randint(0, h - size)
+    
     img = img.crop((x, y, x + size, y + size))
     mask = mask.crop((x, y, x + size, y + size))
 

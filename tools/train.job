@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --partition=gpu_h100
-#SBATCH --gpus=4
+#SBATCH --gpus=2
 #SBATCH --job-name=smoke_corrmatch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=9
@@ -32,7 +32,7 @@ mkdir -p $save_path
 
 # Run your code
 srun python -m torch.distributed.launch \
-    --nproc_per_node=4 \
+    --nproc_per_node=2 \
     --master_addr=localhost \
     --master_port=29501 \
     corrmatch.py \
